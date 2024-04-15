@@ -8,4 +8,8 @@ __pycache__/
 *.pyd
 
 /temp
+/temp_data
 *.html
+.cache
+.env
+song_metadata.json
