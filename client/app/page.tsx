@@ -1,6 +1,33 @@
+"use client"
+
+import { useState, useEffect } from 'react';
+
 import Search from './components/search';
+import { parseSongCSV } from './utils';
+
+interface Song {
+  id: string;
+  trackId: string;
+  name: string;
+  artists: string[];
+  genre: string;
+  subgenre: string;
+}
 
 const Home: React.FC = () => {
+  const [songs, setSongs] = useState<Song[]>([]);
+
+  useEffect(() => {
+    fetchSongs();
+  }, []);
+  // Retrieve song metadata from /songs.csv
+  const fetchSongs = async () => {
+    const csvData = await fetch('songs.csv').then(response => response.text());
+    const parsedSongs = await parseSongCSV(csvData);
+    setSongs(parsedSongs)
+    console.log(parsedSongs.length);
+  };
+
   return (
     <main 
       className="
@@ -11,8 +38,8 @@ const Home: React.FC = () => {
       <h1 className="text-2xl text-bold">Song Search</h1>
       <p></p>
 
-      <div className="md:w-6/12 w-10/12 my-6">
-        <Search />
+      <div className="md:w-7/12 w-11/12 my-6">
+        <Search songs={songs} />
       </div>
       
     </main>
