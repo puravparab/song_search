@@ -4,10 +4,10 @@
 
 - Embeddings are created using normalized values of song characteristics sourced from spotify's database
 
-- Dataset used for this project: [songs](https://www.kaggle.com/datasets/joebeachcapital/30000-spotify-songs)
+- Dataset used for this project can be found here -> [songs](https://www.kaggle.com/datasets/joebeachcapital/30000-spotify-songs)
 
 ## Project Structure
-- client: code for the nextjs frontend
-- backend: code for python backend
-- notebook: all jupyter notebooks used for testing out ideas
-- dataset: primary dataset used for this project
+- Client: code for the nextjs frontend
+- Backend: code for python backend
+- Notebook: all jupyter notebooks used for testing out ideas
+- Dataset: primary datasets used for this project

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import Search from './components/search';
+import Display from './components/display';
 import { parseSongCSV } from './utils';
 
 interface Song {
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
     const parsedSongs = await parseSongCSV(csvData);
     setSongs(parsedSongs)
     console.log(parsedSongs.length);
+    setSelectedSongs([parsedSongs[38]]);
   };
 
   // If user clicks a songs
@@ -51,8 +53,12 @@ const Home: React.FC = () => {
       <h1 className="text-2xl text-bold">Song Search</h1>
       <p></p>
 
-      <div className="md:w-7/12 w-11/12 my-6">
+      <div className="lg:w-7/12 md:w-8/12 w-11/12 my-6">
         <Search songs={songs} selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
+      </div>
+
+      <div className="lg:w-7/12 md:w-8/12 w-11/12 my-5">
+        <Display selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
       </div>
       
     </main>

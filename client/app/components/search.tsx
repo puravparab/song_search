@@ -25,6 +25,7 @@ const Search: React.FC<{songs: Song[], selectedSongs: Song[], handleSongClick: (
 		setQuery(searchQuery);
 
 		if (searchQuery.trim() === ""){
+			setTotalResults(0);
 			setSearchResults([]);
 		} else {
 			const results = songs.filter(song =>
@@ -75,30 +76,38 @@ const Search: React.FC<{songs: Song[], selectedSongs: Song[], handleSongClick: (
 				onChange={handleQueryChange}
 				onClick={handleSearchInputClick}
         className="
-					w-full px-4 py-2 border rounded-lg placeholder:text-zinc-500 text-base focus:ring-1
+					w-full px-4 py-2 mb-2 border rounded-lg placeholder:text-zinc-500 text-base focus:ring-1
 					dark:bg-zinc-800 dark:border-zinc-800 dark:focus:ring-zinc-800 dark:text-stone-100
 					bg-white border-zinc-300 focus:outline-none focus:ring-zinc-500 text-black" 
       />
 			{showDropdown && (
-				<ul className="
-					w-full mt-2 rounded-lg shadow-lg
-					dark:bg-zinc-800 bg-stone-100
-				">
-          {searchResults.map(song => {
-						const isSelected = selectedSongs.includes(song);
-						return (
-						<li 
-							key={song.id} onClick={() => {handleSongClick(song)}}
-							className={`py-2 px-3 text-sm hover:bg-gray-300 cursor-pointer ${
-								isSelected ? 'dark:bg-emerald-700 hover:dark:bg-emerald-700 hover:bg-green-200 bg-green-200' : 'dark:hover:bg-emerald-700 dark:text-zinc-100'
-							}`}
-						>
-							<span className="mr-4 dark:text-zinc-100">{song.name}</span>
-							<span className="dark:text-zinc-400 text-zinc-500">{song.artists.join(', ')}</span>
-						</li>
-						)
-					})}
-        </ul>
+				<>
+					<ul className="
+						w-full rounded-lg shadow-lg
+						dark:bg-zinc-800 bg-stone-100
+					">
+						{searchResults.map(song => {
+							const isSelected = selectedSongs.includes(song);
+							return (
+							<li 
+								key={song.id} onClick={() => {handleSongClick(song)}}
+								className={`py-2 px-3 text-sm hover:bg-gray-300 cursor-pointer ${
+									isSelected ? 'dark:bg-emerald-700 hover:dark:bg-emerald-700 hover:bg-green-200 bg-green-200' : 'dark:hover:bg-emerald-700 dark:text-zinc-100'
+								}`}
+							>
+								<span className="mr-4 dark:text-zinc-100">{song.name}</span>
+								<span className="dark:text-zinc-400 text-zinc-500">{song.artists.join(', ')}</span>
+							</li>
+							)
+						})}
+					</ul>
+					
+					{(totalResults > 0)&& (
+						<p className="mt-2 mr-auto text-sm dark:text-zinc-400">
+							Displaying {searchResults.length} of {totalResults} results
+						</p>
+					)}
+				</>
 			)}
 		</div>
 	);
