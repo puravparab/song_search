@@ -16,10 +16,12 @@ interface Song {
 
 const Home: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([]);
+  const [selectedSongs, setSelectedSongs] = useState<Song[]>([]);
 
   useEffect(() => {
     fetchSongs();
   }, []);
+
   // Retrieve song metadata from /songs.csv
   const fetchSongs = async () => {
     const csvData = await fetch('songs.csv').then(response => response.text());
@@ -27,6 +29,17 @@ const Home: React.FC = () => {
     setSongs(parsedSongs)
     console.log(parsedSongs.length);
   };
+
+  // If user clicks a songs
+	const handleSongClick = (song: Song): void => {
+    if (selectedSongs.includes(song)){
+      setSelectedSongs((selectedSongs) =>{
+        return selectedSongs.filter(ssItem => ssItem !== song)
+      })
+    } else{
+      setSelectedSongs((selectedSongs) => [...selectedSongs, song]);
+    }
+	}
 
   return (
     <main 
@@ -39,7 +52,7 @@ const Home: React.FC = () => {
       <p></p>
 
       <div className="md:w-7/12 w-11/12 my-6">
-        <Search songs={songs} />
+        <Search songs={songs} selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
       </div>
       
     </main>
