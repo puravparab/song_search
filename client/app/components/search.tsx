@@ -77,7 +77,7 @@ const Search: React.FC<{songs: Song[], selectedSongs: Song[], handleSongClick: (
 				onClick={handleSearchInputClick}
         className="
 					w-full px-4 py-2 mb-2 border rounded-lg placeholder:text-zinc-500 text-base focus:ring-1
-					dark:bg-zinc-800 dark:border-zinc-800 dark:focus:ring-zinc-800 dark:text-stone-100
+					dark:bg-black dark:border-zinc-800 dark:focus:ring-zinc-800 dark:text-stone-100
 					bg-white border-zinc-300 focus:outline-none focus:ring-zinc-500 text-black" 
       />
 			{showDropdown && (
