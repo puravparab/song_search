@@ -28,6 +28,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
   const [selectedGenres, setSelectedGenres] = useState<string[]>(allGenres);
   const [numRecs, setNumRecs] = useState<number>(15);
 	const audioRef = useRef<HTMLAudioElement | null>(null);
+	const [isMobile, setIsMobile] = useState<boolean>(false);
 
 	// Run whenver user adds a new song
 	useEffect(() => {
@@ -49,22 +50,28 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 
 	// Audio Previews
 	useEffect(() => {
+		const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize(); // Check initial screen width
+		
     const audio = new Audio();
     audioRef.current = audio;
+    window.addEventListener('resize', handleResize);
     return () => {
       audio.pause();
       audioRef.current = null;
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 	const handleMouseEnter = (previewUrl: string) => {
-		console.log(audioRef);
-    if (audioRef.current) {
+    if (!isMobile && audioRef.current) {
       audioRef.current.src = previewUrl;
       audioRef.current.play();
     }
   };
   const handleMouseLeave = () => {
-    if (audioRef.current) {
+    if (!isMobile && audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
