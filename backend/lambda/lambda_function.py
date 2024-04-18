@@ -21,7 +21,7 @@ def lambda_handler(event, context):
 			'body': json.dumps({
 				'error': 'request failed',
 				'request': json.dumps(body)
-			})
+			}),
 		}
 
 """
@@ -33,7 +33,7 @@ def get_metadata(song_id_arr):
 		with open(metadata_file, 'r') as file:
 			metadata = json.load(file)
 		
-		res = [metadata[i] for i in song_id_arr]
+		res = {"songs": [metadata[i] for i in song_id_arr]}
 		return {
 			'statusCode': 200,
 			'body': json.dumps(res)

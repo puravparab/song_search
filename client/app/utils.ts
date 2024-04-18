@@ -1,5 +1,5 @@
 interface Song {
-  id: string;
+  id: number;
   trackId: string;
   name: string;
   artists: string[];
@@ -23,7 +23,7 @@ export const parseSongCSV = async (csvData: string): Promise<Song[]> => {
       headerRow = row.split(';');
     } else {
       const values = row.split(';');
-      const song: Record<string, string | string[]> = {};
+      const song: Record<string, number | string | string[]> = {};
 
       for (let j = 0; j < headerRow.length; j++) {
         const header = headerRow[j];
@@ -37,13 +37,16 @@ export const parseSongCSV = async (csvData: string): Promise<Song[]> => {
           } else {
             song[header] = [];
           }
-        } else {
+        } else if (header === 'id') {
+          // Convert the id value to a number
+          song[header] = parseInt(value, 10);
+				} else {
           song[header] = value.trim();
         }
       }
 
       songs.push({
-        id: song.id as string,
+        id: song.id as number,
         trackId: song.track_id as string,
         name: song.name as string,
         artists: Array.isArray(song.artists) ? song.artists : [],

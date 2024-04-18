@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface Song {
-  id: string;
+  id: number;
   trackId: string;
   name: string;
   artists: string[];
@@ -9,11 +10,98 @@ interface Song {
   subgenre: string;
 }
 
+interface SongMetadata {
+	id: number;
+  trackId: string;
+  name: string;
+  artists: string[];
+  genre?: string;
+  subgenre?: string;
+	preview_url: string;
+	track_url: string;
+	image_url: string;
+}
+
 const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) => void}> = ({ selectedSongs, handleSongClick }) => {
+	const [inputSongs, setInputSongs] = useState<SongMetadata[]>([])
 	const allGenres = ['pop', 'rap', 'rock', 'latin', 'r&b', 'edm'];
   const [selectedGenres, setSelectedGenres] = useState<string[]>(allGenres);
   const [numRecs, setNumRecs] = useState<number>(15);
 
+	useEffect(() => {
+		const newSongs: Song[] = selectedSongs.filter(song =>
+			!inputSongs.some(inputSong => inputSong.id === song.id)
+		);
+		console.log(newSongs);
+		if (newSongs.length > 0) {
+			fetchSongMetadata(newSongs)
+				.then(data => {
+					processNewSongs(data, newSongs);
+				})
+				.catch(error => {
+					console.error('Error processing new songs:', error);
+					processNewSongs(null, newSongs);
+				});
+		}
+	}, [selectedSongs]);
+
+
+	const fetchSongMetadata = async (songs: Song[]) => {
+		try {
+			const songIds: number[] = songs.map(song => song.id);
+			const requestData = {
+				type: 'metadata',
+				songs: songIds,
+				genres: [],
+				topk: numRecs
+			};
+
+			const response = await axios.post(process.env.NEXT_PUBLIC_LAMBDA || "", requestData, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			if (response.status >= 200 && response.status < 300) {
+				const data = response.data;
+				console.log(data);
+
+				if (data.songs) {
+					return data.songs;
+				} else {
+					console.error('Invalid response format: missing "songs" property');
+				}
+			} else {
+				console.error('Request failed with status:', response.status);
+				console.error('Response data:', response.data);
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	};
+
+	const handleGetRecommendations = async () => {
+  };
+
+	const processNewSongs = (data: SongMetadata[] | null, newSongs: Song[]) => {
+		const newSongMetadata: SongMetadata[] = newSongs.map(song => {
+			const apiData = data?.find(apiSong => apiSong.id === song.id);
+			return {
+				id: song.id,
+				trackId: song.trackId,
+				name: song.name,
+				artists: apiData?.artists || song.artists,
+				genre: song.genre,
+				subgenre: song.subgenre,
+				preview_url: apiData?.preview_url || "",
+				track_url: apiData?.track_url || "",
+				image_url: apiData?.image_url || "",
+			};
+		});
+		setInputSongs(prevSongs => [...prevSongs, ...newSongMetadata]);
+	};
+
+	
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedGenre = event.target.value;
     if (selectedGenre === "all") {
@@ -34,10 +122,6 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 	const handleNumRecsChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
     setNumRecs(parseInt(event.target.value));
   };
-
-	const handleGetRecommendations = (): void => {
-
-	};
 
 	return (
 		<div className="w-full flex md:flex-row md:justify-evenly flex-col items-start gap-6">

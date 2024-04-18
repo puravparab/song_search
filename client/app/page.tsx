@@ -7,7 +7,7 @@ import Display from './components/display';
 import { parseSongCSV } from './utils';
 
 interface Song {
-  id: string;
+  id: number;
   trackId: string;
   name: string;
   artists: string[];
@@ -28,7 +28,6 @@ const Home: React.FC = () => {
     const csvData = await fetch('songs.csv').then(response => response.text());
     const parsedSongs = await parseSongCSV(csvData);
     setSongs(parsedSongs)
-    console.log(parsedSongs.length);
     setSelectedSongs([parsedSongs[38]]);
   };
 

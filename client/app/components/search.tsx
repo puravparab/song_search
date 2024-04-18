@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef} from 'react';
 
 interface Song {
-  id: string;
+  id: number;
   trackId: string;
   name: string;
   artists: string[];
