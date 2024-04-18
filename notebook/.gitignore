@@ -13,4 +13,5 @@ __pycache__/
 .cache
 .env
 song_metadata.json
+embeddings.json
 songs.csv
