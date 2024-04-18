@@ -48,7 +48,7 @@ const Home: React.FC = () => {
       className="
         dark:bg-zinc-950 dark:text-stone-100 bg-stone-200 text-black 
         flex min-h-screen flex-col items-center justify-start 
-        py-10 md:px-28 px-5"
+        py-5 md:px-10 px-5"
     >
       <h1 className="text-2xl text-bold">Song Search</h1>
       <p></p>
@@ -57,7 +57,7 @@ const Home: React.FC = () => {
         <Search songs={songs} selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
       </div>
 
-      <div className="lg:w-7/12 md:w-8/12 w-11/12 my-5">
+      <div className="md:w-full w-11/12 my-5">
         <Display selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
       </div>
       
