@@ -28,7 +28,7 @@ const Home: React.FC = () => {
     const csvData = await fetch('songs.csv').then(response => response.text());
     const parsedSongs = await parseSongCSV(csvData);
     setSongs(parsedSongs)
-    setSelectedSongs([parsedSongs[38]]);
+    setSelectedSongs([parsedSongs[1085], parsedSongs[2430]]);
   };
 
   // If user clicks a songs
