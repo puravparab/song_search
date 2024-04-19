@@ -7,6 +7,7 @@ interface Song {
   subgenre: string;
 }
 
+// Parse songs.csv and load the songs in Song[]
 export const parseSongCSV = async (csvData: string): Promise<Song[]> => {
   const songs: Song[] = [];
 
@@ -16,8 +17,7 @@ export const parseSongCSV = async (csvData: string): Promise<Song[]> => {
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i].trim();
 
-		// Skip empty rows
-    if (!row) {continue;}
+    if (!row) {continue;} // Skip empty rows
 
     if (!headerRow) {
       headerRow = row.split(';');

@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     setSelectedSongs([parsedSongs[1085], parsedSongs[2430]]);
   };
 
-  // If user clicks a songs
+  // If user clicks on a song (search bar or input)
 	const handleSongClick = (song: Song): void => {
     if (selectedSongs.includes(song)){
       setSelectedSongs((selectedSongs) =>{
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
     }
 	}
 
-  // Get metadata of requested songs
+  // Get metadata of requested song ids
   const getMetadata = (song_ids: number[]): Song[] => {
     return songs.filter(song => song_ids.includes(song.id));
   };
@@ -57,10 +57,12 @@ const Home: React.FC = () => {
       <h1 className="text-2xl text-bold">Song Search</h1>
       <p></p>
 
+      {/* Search Bar */}
       <div className="lg:w-7/12 md:w-8/12 w-11/12 my-6">
         <Search songs={songs} selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
       </div>
 
+      {/* Main Display */}
       <div className="md:w-full w-11/12 my-5">
         <Display selectedSongs={selectedSongs} handleSongClick={handleSongClick} getMetadata={getMetadata}/>
       </div>
