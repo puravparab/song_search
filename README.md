@@ -7,7 +7,7 @@
 - Dataset used for this project can be found here -> [songs](https://www.kaggle.com/datasets/joebeachcapital/30000-spotify-songs)
 
 ## Project Structure
-- Client: code for the nextjs frontend
-- Backend: code for python backend
-- Notebook: all jupyter notebooks used for testing out ideas
-- Dataset: primary datasets used for this project
+- [Client](/client): code for the nextjs frontend
+- [Backend](/backend/): python code running on aws lambda
+- [Notebook](/notebook/): all jupyter notebooks used for testing out ideas
+- [Dataset](/dataset/): primary datasets used for this project

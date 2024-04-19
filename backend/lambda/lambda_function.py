@@ -7,12 +7,13 @@ from similarity import get_similarity
 entry point for the aws lambda function
 """
 def lambda_handler(event, context):
-	# get and parse request response (from API Gateway)
 	body = json.loads(event['body'])
 
 	try:
+		# request for song(s) metadata
 		if body["type"] == "metadata":
 			return get_metadata(body["songs"])
+		# request for recommendations
 		elif body["type"] == "recs":
 			res = get_similarity(body["songs"], body["genres"], body["topk"])
 			return get_metadata(res)
@@ -46,6 +47,7 @@ def get_metadata(song_id_arr):
 			'statusCode': 200,
 			'body': json.dumps(res)
 		}
+
 	else:
 		return {
 			'statusCode': 500,
