@@ -32,7 +32,9 @@ const genreColor: { [key: string]: string } = {
 	'': 'bg-emerald-700 hover:opacity-100'
 };
 
-const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) => void, getMetadata: (song_ids: number[]) => Song[]}> = ({ selectedSongs, handleSongClick, getMetadata }) => {
+const Display: React.FC<
+	{selectedSongs: Song[], handleSongClick: (song: Song) => void, getMetadata: (song_ids: number[]) => Song[], addRandomSong: () => void}> = (
+	{selectedSongs, handleSongClick, getMetadata, addRandomSong}) => {
 	
 	// Current Display state
 	const [inputSongs, setInputSongs] = useState<SongMetadata[]>([]) // songs in the input
@@ -228,7 +230,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 			<div className="w-full mb-3 md:pl-4 md:pr-0">
 				<h2 className="text-lg">01. Select songs:</h2>
 				<p className="text-base dark:text-zinc-700">
-					- Search and add one or more songs. 
+					- Search and add one or more songs <span className='ml-2 p-1 cursor-pointer text-lg' onClick={addRandomSong}>🎲</span>
 					<br/>
 					- Click on song to remove it.
 					<br />

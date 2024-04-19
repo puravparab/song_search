@@ -47,6 +47,20 @@ const Home: React.FC = () => {
     return songs.filter(song => song_ids.includes(song.id));
   };
 
+  // Add random song to the input
+  const addRandomSong = () => {
+    if (songs.length > 0) {
+      const randomIndex = Math.floor(Math.random() * songs.length);
+      const randomSong = songs[randomIndex];
+      // find another song if its already included in selected songs
+      while (selectedSongs.includes(randomSong)) {
+        const randomIndex = Math.floor(Math.random() * songs.length);
+        const randomSong = songs[randomIndex];
+      }
+      setSelectedSongs((prevSelectedSongs) => [...prevSelectedSongs, randomSong]);
+    }
+  };
+
   return (
     <main 
       className="
@@ -64,7 +78,12 @@ const Home: React.FC = () => {
 
       {/* Main Display */}
       <div className="md:w-full w-11/12 my-5">
-        <Display selectedSongs={selectedSongs} handleSongClick={handleSongClick} getMetadata={getMetadata}/>
+        <Display 
+          selectedSongs={selectedSongs} 
+          handleSongClick={handleSongClick} 
+          getMetadata={getMetadata} 
+          addRandomSong={addRandomSong}
+        />
       </div>
       
     </main>
