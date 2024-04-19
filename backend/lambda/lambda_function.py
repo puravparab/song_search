@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+from similarity import get_similarity
 
 """
 entry point for the aws lambda function
@@ -11,10 +12,11 @@ def lambda_handler(event, context):
 
 	try:
 		if body["type"] == "metadata":
-			res = get_metadata(body["songs"])
-			return res
-		# elif event["type"] == "recommendations":
-					
+			return get_metadata(body["songs"])
+		elif body["type"] == "recs":
+			res = get_similarity(body["songs"], body["genres"], body["topk"])
+			return get_metadata(res)
+
 	except Exception as e:
 		return {
 			'statusCode': 500,
@@ -28,6 +30,12 @@ def lambda_handler(event, context):
 return metadata for requested song Ids
 """
 def get_metadata(song_id_arr):
+	if song_id_arr == []:
+		return {
+			'statusCode': 404,
+			'body': json.dumps({'error': 'songs not found'})
+		}
+
 	metadata_file = 'song_metadata.json'
 	if os.path.exists(metadata_file):
 		with open(metadata_file, 'r') as file:
