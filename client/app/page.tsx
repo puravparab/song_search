@@ -42,6 +42,11 @@ const Home: React.FC = () => {
     }
 	}
 
+  // Get metadata of requested songs
+  const getMetadata = (song_ids: number[]): Song[] => {
+    return songs.filter(song => song_ids.includes(song.id));
+  };
+
   return (
     <main 
       className="
@@ -57,7 +62,7 @@ const Home: React.FC = () => {
       </div>
 
       <div className="md:w-full w-11/12 my-5">
-        <Display selectedSongs={selectedSongs} handleSongClick={handleSongClick}/>
+        <Display selectedSongs={selectedSongs} handleSongClick={handleSongClick} getMetadata={getMetadata}/>
       </div>
       
     </main>

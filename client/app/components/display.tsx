@@ -15,14 +15,24 @@ interface SongMetadata {
   trackId: string;
   name: string;
   artists: string[];
-  genre?: string;
-  subgenre?: string;
+  genre: string;
+  subgenre: string;
 	preview_url: string;
 	track_url: string;
 	image_url: string;
 }
 
-const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) => void}> = ({ selectedSongs, handleSongClick }) => {
+const genreColor: { [key: string]: string } = {
+  'pop': 'bg-green-600 hover:opacity-100',
+  'rap': 'bg-blue-600 hover:opacity-100',
+  'rock': 'bg-red-600 hover:opacity-100',
+  'latin': 'bg-pink-600 hover:opacity-100',
+  'r&b': 'bg-amber-600 hover:opacity-100',
+  'edm': 'bg-violet-600 hover:opacity-100',
+	'': 'bg-emerald-700 hover:opacity-100'
+};
+
+const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) => void, getMetadata: (song_ids: number[]) => Song[]}> = ({ selectedSongs, handleSongClick, getMetadata }) => {
 	const [inputSongs, setInputSongs] = useState<SongMetadata[]>([])
 	const allGenres = ['pop', 'rap', 'rock', 'latin', 'r&b', 'edm'];
   const [selectedGenres, setSelectedGenres] = useState<string[]>(allGenres);
@@ -185,20 +195,24 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 	}
 
 	const processRecommendedSongs = (data: SongMetadata[]): SongMetadata[] => {
-		const newSongMetadata: SongMetadata[] = data.map(song => {
+		const songIds = data.map(song => song.id);
+  	const local_metadata = getMetadata(songIds);
+
+		const res: SongMetadata[] = data.map(song => {
+			const local_song = local_metadata.find(s => s.id === song.id);
 			return {
 				id: song.id,
 				trackId: song.trackId,
 				name: song.name,
 				artists: song.artists,
-				genre: song.genre,
-				subgenre: song.subgenre,
-				preview_url: song.preview_url || "",
-				track_url: song.track_url || "",
-				image_url: song.image_url || "",
+				genre: local_song?.genre || '',
+				subgenre: local_song?.subgenre || '',
+				preview_url: song.preview_url,
+				track_url: song.track_url,
+				image_url: song.image_url,
 			};
 		});
-		return newSongMetadata
+		return res;
 	};
 
 	return (
@@ -217,19 +231,18 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 					{inputSongs.length !== 0 && selectedSongs.map(song => {
 						const inputSong = inputSongs.find(s => s.id === song.id);
 						if(inputSong){
+							let bgColor = genreColor[song.genre || '']
 							return (
 								<div 
 									key={song.id} onClick={() => {handleRemoveSong(song)}}
 									onMouseEnter={() => handleMouseEnter(inputSong.preview_url)}
 									onMouseLeave={handleMouseLeave}
-									className="
-										flex flex-row py-2 pl-3 pr-3 w-fit rounded-lg text-xs cursor-pointer
-									hover:bg-gray-300 dark:bg-emerald-700 bg-green-200 dark:hover:bg-emerald-700 dark:text-zinc-100"
+									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-90 ${bgColor}`}
 								>	
 									<img src={inputSong.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
 									<div className="flex flex-col">
 										<span className="dark:text-zinc-100">{inputSong.name}</span>
-										<span className="dark:text-zinc-400 text-zinc-500">{inputSong.artists.join(', ')}</span>
+										<span className="dark:text-zinc-300 text-zinc-500">{inputSong.artists.join(', ')}</span>
 									</div>
 								</div>
 							);
@@ -268,27 +281,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 						</select>
 						<div className="lg:w-fit flex flex-wrap gap-2 mb-4">
 							{selectedGenres.map(genre => {
-								let bgColor = '';
-								switch (genre) {
-									case 'pop': 
-										bgColor = 'bg-green-600';			
-										break;
-									case 'rap':
-										bgColor = 'bg-blue-600';
-										break;
-									case 'rock':
-										bgColor = 'bg-red-600';
-										break;
-									case 'latin':
-										bgColor = 'bg-pink-600';
-										break;
-									case 'r&b':
-										bgColor = 'bg-amber-600';
-										break;
-									case 'edm':
-										bgColor = 'bg-violet-600';
-										break;
-								}
+								let bgColor = genreColor[genre];
 								return (
 									<div
 										key={genre}
@@ -346,25 +339,23 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 				</p>
 				<div className="flex flex-row flex-wrap gap-4 mt-4 mb-3 w-full">
 					{displaySongs.length !== 0 && displaySongs.map(song => {
-						const displaySong = displaySongs.find(s => s.id === song.id);
-						if(displaySong){
+						// const displaySong = displaySongs.find(s => s.id === song.id);
+						if (song){
+							let bgColor = genreColor[song.genre || '']
 							return (
 								<div 
 									key={song.id}
-									onMouseEnter={() => handleMouseEnter(displaySong.preview_url)}
+									onMouseEnter={() => handleMouseEnter(song.preview_url)}
 									onMouseLeave={handleMouseLeave}
-									className="
-										flex flex-row py-2 pl-3 pr-3 w-fit rounded-lg text-xs cursor-pointer
-									hover:bg-gray-300 dark:bg-emerald-700 bg-green-200 dark:hover:bg-emerald-700 dark:text-zinc-100"
+									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-90 ${bgColor}`}
 								>	
-									<img src={displaySong.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
+									<img src={song.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
 									<div className="flex flex-col">
-										<span className="dark:text-zinc-100">{displaySong.name}</span>
-										<span className="dark:text-zinc-400 text-zinc-500">{displaySong.artists.join(', ')}</span>
+										<span className="dark:text-zinc-100">{song.name}</span>
+										<span className="dark:text-zinc-300 text-zinc-200">{song.artists.join(', ')}</span>
 									</div>
 								</div>
-							);
-						}
+						);}
 					})}
 				</div>
 			</div>
