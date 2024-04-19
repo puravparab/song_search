@@ -41,7 +41,11 @@ const Display: React.FC<
 	const allGenres = ['pop', 'rap', 'rock', 'latin', 'r&b', 'edm']; // default genres included
   const [selectedGenres, setSelectedGenres] = useState<string[]>(allGenres); // selected genres
   const [numRecs, setNumRecs] = useState<number>(25); // number of recommendations
+	
 	const [displaySongs, setDisplaySongs] = useState<SongMetadata[]>([]); // stores recommended songs returned from api
+
+	const [requestText, setRequestText] = useState<string>(""); // displayed when user clicks the get recommendation button
+	const [requestDuration, setRequestDuration] = useState<number | null>(null); // store request duration
 
 	const audioRef = useRef<HTMLAudioElement | null>(null); // audio element
 
@@ -186,21 +190,28 @@ const Display: React.FC<
 				genres: selectedGenres,
 				topk: numRecs
 			};
+			
+			const startTime = Date.now();
 			const response = await axios.post(process.env.NEXT_PUBLIC_LAMBDA || "", requestData, {headers: {'Content-Type': 'application/json'}});
+    	const duration = Date.now() - startTime; // Store the duration(ms) in state
 
 			if (response.status === 200) {
 				const data = response.data;
-				if (data.songs) {
+				if (data && data.songs) {
 						setDisplaySongs(processRecommendedSongs(data.songs));
+						setRequestText(`(${duration/1000} seconds)`);
 				} else {
 					console.error('Invalid response format: missing "songs" property');
+					setRequestText("Try again");
 				}
 			} else {
 				console.error('Request failed with status:', response.status);
 				console.error('Response data:', response.data);
+				setRequestText("Try again");
 			}
 		} catch (error) {
 			console.error('Error:', error);
+			setRequestText("Try again");
 		}
 	}
 	// create metadata for each song using mix of local and external metadata
@@ -327,10 +338,19 @@ const Display: React.FC<
 				
 				<div className="flex flex-col sm:items-center mt-10">
 					<button 
-						onClick={handleGetRecommendations}
+						onClick={() => {
+							setRequestText("Finding similar songs for you...");
+							handleGetRecommendations();
+							setTimeout(() => {setRequestText("running cosine similarity...");}, 2000);
+						}}
 						className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none">
 						Get Recommendations
 					</button>
+					{requestText !== "" && (
+						<p className="mt-2 mx-auto text-sm text-zinc-500">
+							{requestText}
+						</p>
+					)}
 				</div>
 
 			</div>
