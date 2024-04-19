@@ -1,3 +1,4 @@
 lambda.zip
 song_metadata.json
 embeddings.json
+__pycache__/

@@ -26,9 +26,12 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 	const [inputSongs, setInputSongs] = useState<SongMetadata[]>([])
 	const allGenres = ['pop', 'rap', 'rock', 'latin', 'r&b', 'edm'];
   const [selectedGenres, setSelectedGenres] = useState<string[]>(allGenres);
-  const [numRecs, setNumRecs] = useState<number>(15);
+  const [numRecs, setNumRecs] = useState<number>(20);
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 	const [isMobile, setIsMobile] = useState<boolean>(false);
+
+	// Songs recommended
+	const [displaySongs, setDisplaySongs] = useState<SongMetadata[]>([]);
 
 	// Run whenver user adds a new song
 	useEffect(() => {
@@ -38,15 +41,19 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 		if (newSongs.length > 0) {
 			fetchSongMetadata(newSongs)
 				.then(data => {
-					processNewSongs(data, newSongs);
+					setInputSongs(prevSongs => [...prevSongs, ...processNewSongs(data, newSongs)]);
 				})
 				.catch(error => {
 					console.error('Error processing new songs:', error);
-					processNewSongs(null, newSongs);
+					setInputSongs(prevSongs => [...prevSongs, ...processNewSongs(null, newSongs)]);
 				});
 		}
 	}, [selectedSongs, inputSongs]);
 
+	const handleRemoveSong = (song: Song) => {
+  	setInputSongs(prevSongs => prevSongs.filter(s => s.id !== song.id));
+    handleSongClick(song);
+  };
 
 	// Audio Previews
 	useEffect(() => {
@@ -54,7 +61,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
       setIsMobile(window.innerWidth <= 768);
     };
     handleResize(); // Check initial screen width
-		
+
     const audio = new Audio();
     audioRef.current = audio;
     window.addEventListener('resize', handleResize);
@@ -84,7 +91,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 			const requestData = {
 				type: 'metadata',
 				songs: songIds,
-				genres: [],
+				genres: selectedGenres,
 				topk: numRecs
 			};
 
@@ -108,9 +115,6 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 		}
 	};
 
-	const handleGetRecommendations = async () => {
-  };
-
 	const processNewSongs = (data: SongMetadata[] | null, newSongs: Song[]) => {
 		const newSongMetadata: SongMetadata[] = newSongs.map(song => {
 			const apiData = data?.find(apiSong => apiSong.id === song.id);
@@ -126,9 +130,8 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 				image_url: apiData?.image_url || "",
 			};
 		});
-		setInputSongs(prevSongs => [...prevSongs, ...newSongMetadata]);
+		return newSongMetadata
 	};
-
 
 	// Customize recommendation options
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -146,14 +149,62 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 	const removeGenre = (genre: string): void => {
     setSelectedGenres(selectedGenres.filter(g => g !== genre));
   };
-	const handleNumRecsChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
+	const handleNumRecsChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setNumRecs(parseInt(event.target.value));
   };
+
+	// Get recommendations from the api
+	const handleGetRecommendations = async () => {
+		try {
+			const songIds: number[] = inputSongs.map(song => song.id);
+			const requestData = {
+				type: 'recs',
+				songs: songIds,
+				genres: selectedGenres,
+				topk: numRecs
+			};
+
+			const response = await axios.post(process.env.NEXT_PUBLIC_LAMBDA || "", requestData, {
+				headers: {'Content-Type': 'application/json'}
+			});
+
+			if (response.status === 200) {
+				const data = response.data;
+				if (data.songs) {
+						setDisplaySongs(processRecommendedSongs(data.songs));
+				} else {
+					console.error('Invalid response format: missing "songs" property');
+				}
+			} else {
+				console.error('Request failed with status:', response.status);
+				console.error('Response data:', response.data);
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	}
+
+	const processRecommendedSongs = (data: SongMetadata[]): SongMetadata[] => {
+		const newSongMetadata: SongMetadata[] = data.map(song => {
+			return {
+				id: song.id,
+				trackId: song.trackId,
+				name: song.name,
+				artists: song.artists,
+				genre: song.genre,
+				subgenre: song.subgenre,
+				preview_url: song.preview_url || "",
+				track_url: song.track_url || "",
+				image_url: song.image_url || "",
+			};
+		});
+		return newSongMetadata
+	};
 
 	return (
 		<div className="w-full flex md:flex-row md:justify-evenly flex-col items-start gap-6">
 			{/* Add songs section */}
-			<div className="w-full mb-3 md:px-4">
+			<div className="w-full mb-3 md:pl-4 md:pr-0">
 				<h2 className="text-lg">01. Select songs:</h2>
 				<p className="text-base dark:text-zinc-700">
 					- Search and add one or more songs. 
@@ -168,7 +219,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 						if(inputSong){
 							return (
 								<div 
-									key={song.id} onClick={() => {handleSongClick(song)}}
+									key={song.id} onClick={() => {handleRemoveSong(song)}}
 									onMouseEnter={() => handleMouseEnter(inputSong.preview_url)}
 									onMouseLeave={handleMouseLeave}
 									className="
@@ -191,7 +242,7 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 			<div className="w-full mb-3">
 				<h2 className="text-lg">02. Customize:</h2>
 				<p className="text-base dark:text-zinc-700">
-					- Select genres you want to include in the recommendation.
+					- Select genres you want to include.
 					<br/>
 					- Choose number of recommendations.
 					<br />
@@ -284,9 +335,37 @@ const Display: React.FC<{selectedSongs: Song[], handleSongClick: (song: Song) =>
 			</div>
 
 			{/* Get recommendations */}
-			<div className="w-full mb-3 md:px-4">
+			<div className="w-full mb-3 md:px-4 lg:px-14">
 				<h2 className="text-lg">03. Your Recommendations:</h2>
+				<p className="text-base dark:text-zinc-700">
+					- You song recommendations are displayed below.
+					<br/>
+					- Hover over a song to listen to it.
+					<br />
+					- Click on song to go to its spotify page.
+				</p>
 				<div className="flex flex-row flex-wrap gap-4 mt-4 mb-3 w-full">
+					{displaySongs.length !== 0 && displaySongs.map(song => {
+						const displaySong = displaySongs.find(s => s.id === song.id);
+						if(displaySong){
+							return (
+								<div 
+									key={song.id}
+									onMouseEnter={() => handleMouseEnter(displaySong.preview_url)}
+									onMouseLeave={handleMouseLeave}
+									className="
+										flex flex-row py-2 pl-3 pr-3 w-fit rounded-lg text-xs cursor-pointer
+									hover:bg-gray-300 dark:bg-emerald-700 bg-green-200 dark:hover:bg-emerald-700 dark:text-zinc-100"
+								>	
+									<img src={displaySong.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
+									<div className="flex flex-col">
+										<span className="dark:text-zinc-100">{displaySong.name}</span>
+										<span className="dark:text-zinc-400 text-zinc-500">{displaySong.artists.join(', ')}</span>
+									</div>
+								</div>
+							);
+						}
+					})}
 				</div>
 			</div>
 		</div>

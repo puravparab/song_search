@@ -18,12 +18,12 @@ def get_similarity(song_ids, genres, topk):
 
 		if len(song_ids) == 1:
 			song_id = song_ids[0]
-			song_embedding = next((embedding['embedding'] for embedding in filtered_embeddings if embedding['id'] == song_id), None)
+			song_embedding = embeddings_data[song_id]["embedding"]
 			if song_embedding is None:
 				return []
 
 		else:
-			song_embeddings = [embedding['embedding'] for embedding in filtered_embeddings if embedding['id'] in song_ids]
+			song_embeddings = [embedding['embedding'] for embedding in embeddings_data if embedding['id'] in song_ids]
 			if len(song_embeddings) == 0:
 				return []
 			song_embedding = np.mean(song_embeddings, axis=0)
