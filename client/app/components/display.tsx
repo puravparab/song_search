@@ -3,7 +3,7 @@ import axios from 'axios';
 
 interface Song {
   id: number;
-  trackId: string;
+  track_id: string;
   name: string;
   artists: string[];
   genre: string;
@@ -12,7 +12,7 @@ interface Song {
 
 interface SongMetadata {
 	id: number;
-  trackId: string;
+  track_id: string;
   name: string;
   artists: string[];
   genre: string;
@@ -32,50 +32,50 @@ const genreColor: { [key: string]: string } = {
 	'': 'bg-emerald-700 hover:opacity-100'
 };
 
-const Display: React.FC<
-	{selectedSongs: Song[], handleSongClick: (song: Song) => void, getMetadata: (song_ids: number[]) => Song[], addRandomSong: () => void}> = (
-	{selectedSongs, handleSongClick, getMetadata, addRandomSong}) => {
-	
+interface DisplayProps {
+  displayState: {
+    input: SongMetadata[];
+    genres: string[];
+    num_recs: number;
+    output: SongMetadata[];
+  };
+  handleSongClick: (song_id: number) => void;
+  addRandomSong: () => void;
+	getMetadata: (song_ids: number[]) => Song[];
+	updateDisplayState: (input: SongMetadata[], genres: string[], num_recs: number, output: SongMetadata[]) => void
+}
+
+const Display: React.FC<DisplayProps> = ({
+	displayState, 
+	handleSongClick, 
+	addRandomSong,
+	getMetadata,
+	updateDisplayState
+}) => {
 	// Current Display state
 	const [inputSongs, setInputSongs] = useState<SongMetadata[]>([]) // songs in the input
 	const allGenres = ['pop', 'rap', 'rock', 'latin', 'r&b', 'edm']; // default genres included
-  const [selectedGenres, setSelectedGenres] = useState<string[]>(allGenres); // selected genres
-  const [numRecs, setNumRecs] = useState<number>(25); // number of recommendations
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]); // selected genres
+  const [numRecs, setNumRecs] = useState<number>(displayState.num_recs); // number of recommendations
 	
 	const [displaySongs, setDisplaySongs] = useState<SongMetadata[]>([]); // stores recommended songs returned from api
 
 	const [requestText, setRequestText] = useState<string>(""); // displayed when user clicks the get recommendation button
-	const [requestDuration, setRequestDuration] = useState<number | null>(null); // store request duration
 
 	const audioRef = useRef<HTMLAudioElement | null>(null); // audio element
 
 	const [isMobile, setIsMobile] = useState<boolean>(false); // check if mobile view
 
-	// INPUT SONGS
-	// Run whenver user adds a new song
 	useEffect(() => {
-		// process new songs if they are not included in current input
-		const newSongs: Song[] = selectedSongs.filter(song =>
-			!inputSongs.some(inputSong => inputSong.id === song.id)
-		);
-		if (newSongs.length > 0) {
-			fetchSongMetadata(newSongs)
-				.then(data => {
-					// use local and external metadata
-					setInputSongs(prevSongs => [...prevSongs, ...processInputSongs(data, newSongs)]);
-				})
-				.catch(error => {
-					console.error('Error processing new songs:', error);
-					// user only local metadata
-					setInputSongs(prevSongs => [...prevSongs, ...processInputSongs(null, newSongs)]);
-				});
-		}
-	}, [selectedSongs, inputSongs]);
+		setInputSongs(displayState.input);
+		setSelectedGenres(displayState.genres);
+		setNumRecs(displayState.num_recs);
+		setDisplaySongs(displayState.output);
+	}, [displayState]);
 
 	// If user clicks on one of the input songs
-	const handleRemoveSong = (song: Song) => {
-  	setInputSongs(prevSongs => prevSongs.filter(s => s.id !== song.id)); // remove song from input
-    handleSongClick(song); // call function from parent
+	const handleRemoveSong = (song_id: number) => {
+    handleSongClick(song_id); // call function from parent
   };
 
 	// AUDIO
@@ -132,54 +132,6 @@ const Display: React.FC<
 		setNumRecs(parseInt(event.target.value));
 	};
 
-	// EXTERNAL API
-	// Get song(s) metadata from the api
-	const fetchSongMetadata = async (songs: Song[]) => {
-		try {
-			const songIds: number[] = songs.map(song => song.id);
-			const requestData = {
-				type: 'metadata',
-				songs: songIds,
-				genres: selectedGenres,
-				topk: numRecs
-			};
-			const response = await axios.post(process.env.NEXT_PUBLIC_LAMBDA || "", requestData, {
-				headers: {'Content-Type': 'application/json'}
-			});
-			if (response.status === 200) {
-				const data = response.data;
-				if (data.songs) {
-					return data.songs;
-				} else {
-					console.error('Invalid response format: missing "songs" property');
-				}
-			} else {
-				console.error('Request failed with status:', response.status);
-				console.error('Response data:', response.data);
-			}
-		} catch (error) {
-			console.error('Error:', error);
-		}
-	};
-	// create metadata for each song using mix of local and external metadata
-	const processInputSongs = (data: SongMetadata[] | null, newSongs: Song[]) => {
-		const newSongMetadata: SongMetadata[] = newSongs.map(song => {
-			const apiData = data?.find(apiSong => apiSong.id === song.id);
-			return {
-				id: song.id,
-				trackId: song.trackId,
-				name: song.name,
-				artists: apiData?.artists || song.artists,
-				genre: song.genre,
-				subgenre: song.subgenre,
-				preview_url: apiData?.preview_url || "",
-				track_url: apiData?.track_url || "",
-				image_url: apiData?.image_url || "",
-			};
-		});
-		return newSongMetadata
-	};
-
 	// Get recommendations from the API
 	const handleGetRecommendations = async () => {
 		try {
@@ -198,7 +150,8 @@ const Display: React.FC<
 			if (response.status === 200) {
 				const data = response.data;
 				if (data && data.songs) {
-						setDisplaySongs(processRecommendedSongs(data.songs));
+						const output = processRecommendedSongs(data.songs)
+						updateDisplayState(inputSongs, selectedGenres, numRecs, output);
 						setRequestText(`(${duration/1000} seconds)`);
 				} else {
 					console.error('Invalid response format: missing "songs" property');
@@ -222,7 +175,7 @@ const Display: React.FC<
 			const local_song = local_metadata.find(s => s.id === song.id);
 			return {
 				id: song.id,
-				trackId: song.trackId,
+				track_id: local_song?.track_id || song.track_id,
 				name: song.name,
 				artists: song.artists,
 				genre: local_song?.genre || '',
@@ -232,6 +185,7 @@ const Display: React.FC<
 				image_url: song.image_url,
 			};
 		});
+		console.log(res);
 		return res;
 	};
 
@@ -239,22 +193,22 @@ const Display: React.FC<
 		<div className="w-full flex md:flex-row md:justify-evenly flex-col items-start gap-6">
 			{/* 01. Select songs */}
 			<div className="w-full mb-3 md:pl-4 md:pr-0">
-				<h2 className="text-lg">01. Select songs:</h2>
+				<h2 className="text-lg">01. Select songs: <span className='ml-2 p-1 cursor-pointer text-lg' onClick={addRandomSong}>🎲</span></h2>
 				<p className="text-base dark:text-zinc-700">
-					- Search and add one or more songs <span className='ml-2 p-1 cursor-pointer text-lg' onClick={addRandomSong}>🎲</span>
+					- Search and add one or more songs.
 					<br/>
 					- Click on song to remove it.
 					<br />
 					- Hover over a song to listen to it.
 				</p>
 				<div className="flex flex-row flex-wrap gap-4 mt-4 w-full">
-					{inputSongs.length !== 0 && selectedSongs.map(song => {
+					{inputSongs.length !== 0 && inputSongs.map(song => {
 						const inputSong = inputSongs.find(s => s.id === song.id);
 						if(inputSong){
 							let bgColor = genreColor[song.genre || '']
 							return (
 								<div 
-									key={song.id} onClick={() => {handleRemoveSong(song)}}
+									key={song.id} onClick={() => {handleRemoveSong(song.id)}}
 									onMouseEnter={() => handleMouseEnter(inputSong.preview_url)}
 									onMouseLeave={handleMouseLeave}
 									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-90 ${bgColor}`}

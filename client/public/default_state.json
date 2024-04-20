@@ -1,0 +1,366 @@
+{
+	"input": [
+    {
+			"id": 1085,
+			"track_id": "1eyzqe2QqGZUmfcPZtrIyt",
+			"name": "Midnight City",
+			"artists": [
+				"M83"
+			],
+			"genre": "pop",
+			"subgenre": "dance pop",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273fff2cb485c36a6d8f639bdba",
+      "track_url": "https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt",
+      "preview_url": "https://p.scdn.co/mp3-preview/5aa3429867af2283925c942e7051342a464460b0?cid=0762a2003d0e45f9aa65d9cd2c212baf"
+    },
+    {
+			"id": 2430,
+			"track_id": "3FtYbEfBqAlGO46NUDQSAt",
+			"name": "Electric Feel",
+			"artists": [
+				"MGMT"
+			],
+			"genre": "pop",
+			"subgenre": "electropop",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2738b32b139981e79f2ebe005eb",
+      "track_url": "https://open.spotify.com/track/3FtYbEfBqAlGO46NUDQSAt",
+      "preview_url": "https://p.scdn.co/mp3-preview/b288d1b3245bfa82243267c77fe152dbd696f3c8?cid=0762a2003d0e45f9aa65d9cd2c212baf"
+    }
+	],
+	"genres": ["pop", "rap", "rock", "latin", "r&b", "edm"],
+	"num_recs": 25,
+	"output":[
+		{
+			"id": 30977,
+			"trackId": "1almCHdsfikRPfVB9VrEdT",
+			"name": "Little Do You Know",
+			"artists": [
+					"Alex & Sierra"
+			],
+			"genre": "edm",
+			"subgenre": "pop edm",
+			"preview_url": "https://p.scdn.co/mp3-preview/0d543b0bbd911bb479d6c0a533c059cab4921f9c?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/1almCHdsfikRPfVB9VrEdT",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273925b6102fc5edac08ec995b5"
+		},
+		{
+			"id": 4548,
+			"trackId": "0B2RttXEiyXsMeQ7mMP3EI",
+			"name": "Cruel (feat. ZAYN)",
+			"artists": [
+					"Snakehips"
+			],
+			"genre": "pop",
+			"subgenre": "indie poptimism",
+			"preview_url": "https://p.scdn.co/mp3-preview/5a64bd92cb33103c041caa872442160d39ca22ce?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/0B2RttXEiyXsMeQ7mMP3EI",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273f7068ce61d97e3dbdbea426d"
+		},
+		{
+			"id": 28344,
+			"trackId": "6lQii0sW6wpLsCbfUWT7h0",
+			"name": "Boom!",
+			"artists": [
+					"Justin Prime",
+					"Subliminals"
+			],
+			"genre": "edm",
+			"subgenre": "big room",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/6lQii0sW6wpLsCbfUWT7h0",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273e3b63a634fde807813810f4f"
+		},
+		{
+			"id": 15591,
+			"trackId": "6MNtx2I1QaELzsLDaxAchs",
+			"name": "Tear Down the Wall",
+			"artists": [
+					"Art Of Dying"
+			],
+			"genre": "rock",
+			"subgenre": "hard rock",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/6MNtx2I1QaELzsLDaxAchs",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2730238625c19e57ec8c68d1067"
+		},
+		{
+			"id": 15921,
+			"trackId": "4ixhOZtG2MHMB5eKDM0gCg",
+			"name": "Room To Breathe",
+			"artists": [
+					"You Me At Six"
+			],
+			"genre": "rock",
+			"subgenre": "hard rock",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/4ixhOZtG2MHMB5eKDM0gCg",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273f5246555618f4fcbbb67a705"
+		},
+		{
+			"id": 29556,
+			"trackId": "2TK4UUeqjb5ZZAEAAxeXRc",
+			"name": "The Legend - Danger Dance Radio Mix",
+			"artists": [
+					"Albin Myers",
+					"Carli"
+			],
+			"genre": "edm",
+			"subgenre": "pop edm",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/2TK4UUeqjb5ZZAEAAxeXRc",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b27382768523b3c7e61ea564400c"
+		},
+		{
+			"id": 4585,
+			"trackId": "1JUfgsFPWjXT3ZzzV77v5u",
+			"name": "Hold On - Radio Edit",
+			"artists": [
+					"MOGUAI",
+					"Cheat Codes"
+			],
+			"genre": "pop",
+			"subgenre": "indie poptimism",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/1JUfgsFPWjXT3ZzzV77v5u",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273fed723e5145520dab0b93ec1"
+		},
+		{
+			"id": 29360,
+			"trackId": "4XB0xu7PoC5rj8YpHzvo3y",
+			"name": "4U",
+			"artists": [
+					"Aero Chord"
+			],
+			"genre": "edm",
+			"subgenre": "big room",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/4XB0xu7PoC5rj8YpHzvo3y",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2738cc4c4b1e4cd0b3ca50dff69"
+		},
+		{
+			"id": 8437,
+			"trackId": "7CxWLI6FDroqte3DbucNx9",
+			"name": "Double Crown",
+			"artists": [
+					"Jelly Roll"
+			],
+			"genre": "rap",
+			"subgenre": "southern hip hop",
+			"preview_url": "https://p.scdn.co/mp3-preview/829790fe3dc3401caa6c57886e0010869073864f?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/7CxWLI6FDroqte3DbucNx9",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b27315f032e426133c995e725423"
+		},
+		{
+			"id": 1351,
+			"trackId": "0Z26mbSHJ1dkUu7g9DDgif",
+			"name": "Trigger",
+			"artists": [
+					"Major Lazer",
+					"Khalid",
+					"Death Stranding: Timefall"
+			],
+			"genre": "pop",
+			"subgenre": "post-teen pop",
+			"preview_url": "https://p.scdn.co/mp3-preview/683080f6319277c3156fee5eb15f50c0acb866ef?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/0Z26mbSHJ1dkUu7g9DDgif",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2738c639ee98d8019336de10bfd"
+		},
+		{
+			"id": 21549,
+			"trackId": "2wrJq5XKLnmhRXHIAf9xBa",
+			"name": "10,000 Hours (with Justin Bieber)",
+			"artists": [
+					"Dan + Shay",
+					"Justin Bieber"
+			],
+			"genre": "r&b",
+			"subgenre": "urban contemporary",
+			"preview_url": "https://p.scdn.co/mp3-preview/d36cde63177e7e6d460340bd5763780323b6374e?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/2wrJq5XKLnmhRXHIAf9xBa",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b27386953b1cbaa29e477db0b479"
+		},
+		{
+			"id": 728,
+			"trackId": "3cphb8kdsjElYR7r5icK3H",
+			"name": "Nice To Meet Ya",
+			"artists": [
+					"Niall Horan"
+			],
+			"genre": "pop",
+			"subgenre": "dance pop",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/3cphb8kdsjElYR7r5icK3H",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2732c40a347a68ea9bf72e01d6c"
+		},
+		{
+			"id": 17715,
+			"trackId": "373ugl3mW7zrpYMWjPZWmH",
+			"name": "Mami Cosa",
+			"artists": [
+					"Hassan El Shafei"
+			],
+			"genre": "latin",
+			"subgenre": "latin pop",
+			"preview_url": "https://p.scdn.co/mp3-preview/cdea7b73d42e4625f6fec99cdfdbfa7d9e230d57?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/373ugl3mW7zrpYMWjPZWmH",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2738704d96412c5fc4123034b33"
+		},
+		{
+			"id": 26625,
+			"trackId": "3dq91g5o0wcFKQPdpaUSlr",
+			"name": "Wish I Didn't Miss You",
+			"artists": [
+					"Angie Stone"
+			],
+			"genre": "r&b",
+			"subgenre": "neo soul",
+			"preview_url": "https://p.scdn.co/mp3-preview/25686736ee425ba0b2650beb5886f210875eeecb?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/3dq91g5o0wcFKQPdpaUSlr",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b27346790260cc1c52ea4d8a9861"
+		},
+		{
+			"id": 30787,
+			"trackId": "4OCvd4ila7Zp0tEsFWs2hP",
+			"name": "Don't Leave - Ekali Remix",
+			"artists": [
+					"Snakehips",
+					"MØ"
+			],
+			"genre": "edm",
+			"subgenre": "pop edm",
+			"preview_url": "https://p.scdn.co/mp3-preview/fb01d9777b55d18a35fb4be7bd16aea91ebf80ab?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/4OCvd4ila7Zp0tEsFWs2hP",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2739c64971f250685b409943c22"
+		},
+		{
+			"id": 5274,
+			"trackId": "1Cy6AaY8lvDFxCB7AlLjME",
+			"name": "Chainsmoking",
+			"artists": [
+					"Jacob Banks"
+			],
+			"genre": "pop",
+			"subgenre": "indie poptimism",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/1Cy6AaY8lvDFxCB7AlLjME",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273f5cb200f3336023838800638"
+		},
+		{
+			"id": 26575,
+			"trackId": "7p6IXGLt5Z6XYthXFlNywB",
+			"name": "Number One",
+			"artists": [
+					"John Legend"
+			],
+			"genre": "r&b",
+			"subgenre": "neo soul",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/7p6IXGLt5Z6XYthXFlNywB",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273485b7e17262469bf05a20ee1"
+		},
+		{
+			"id": 4104,
+			"trackId": "0OBIHrjv88N4SEtf2INos5",
+			"name": "Heavy",
+			"artists": [
+					"POWERS"
+			],
+			"genre": "pop",
+			"subgenre": "indie poptimism",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/0OBIHrjv88N4SEtf2INos5",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273ac9f66099cd2be2f87f3d91e"
+		},
+		{
+			"id": 3767,
+			"trackId": "6lhBJwyNBMPr6ejjscUDCj",
+			"name": "Glitterball",
+			"artists": [
+					"Sigma"
+			],
+			"genre": "pop",
+			"subgenre": "electropop",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/6lhBJwyNBMPr6ejjscUDCj",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273293f60c4616affaac11606ab"
+		},
+		{
+			"id": 16296,
+			"trackId": "5lIat5pyge2yKkV20FlgQ7",
+			"name": "Little Do You Know",
+			"artists": [
+					"Campsite Dream"
+			],
+			"genre": "latin",
+			"subgenre": "tropical",
+			"preview_url": "https://p.scdn.co/mp3-preview/054568a893a93bb2997fe65ca121d0d1e05a3297?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/5lIat5pyge2yKkV20FlgQ7",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273d17d7638eda41524fe101f6f"
+		},
+		{
+			"id": 14864,
+			"trackId": "7I9Xd5GMl0CNvnM6PFpS1q",
+			"name": "Hear Me",
+			"artists": [
+					"Wolf Jaw"
+			],
+			"genre": "rock",
+			"subgenre": "hard rock",
+			"preview_url": "https://p.scdn.co/mp3-preview/564474421279f5219724587a762082133b723eca?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/7I9Xd5GMl0CNvnM6PFpS1q",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2731dbc9f9b4653808102119e86"
+		},
+		{
+			"id": 20545,
+			"trackId": "7xHWNBFm6ObGEQPaUxHuKO",
+			"name": "The Greatest",
+			"artists": [
+					"Sia"
+			],
+			"genre": "latin",
+			"subgenre": "latin hip hop",
+			"preview_url": "https://p.scdn.co/mp3-preview/873fb7b286131f05434bc7c56899c513f61adb2a?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/7xHWNBFm6ObGEQPaUxHuKO",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273754b2fddebe7039fdb912837"
+		},
+		{
+			"id": 2742,
+			"trackId": "2FiSTH0GYpIioUgjfzMIja",
+			"name": "Stay (feat. Maty Noyes)",
+			"artists": [
+					"Kygo"
+			],
+			"genre": "pop",
+			"subgenre": "electropop",
+			"preview_url": "https://p.scdn.co/mp3-preview/e079c8d86520771a6367e275518e5f4c00f4ac81?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/2FiSTH0GYpIioUgjfzMIja",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b27335590cb9280d5a1f5221ae1a"
+		},
+		{
+			"id": 2972,
+			"trackId": "69uxyAqqPIsUyTO8txoP2M",
+			"name": "Adventure of a Lifetime",
+			"artists": [
+					"Coldplay"
+			],
+			"genre": "pop",
+			"subgenre": "electropop",
+			"preview_url": "https://p.scdn.co/mp3-preview/0b666b9a07035a659c7e5b7cb754f1b81bf1535b?cid=0762a2003d0e45f9aa65d9cd2c212baf",
+			"track_url": "https://open.spotify.com/track/69uxyAqqPIsUyTO8txoP2M",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b2738ff7c3580d429c8212b9a3b6"
+		},
+		{
+			"id": 30876,
+			"trackId": "0xMd5bcWTbyXS7wPrBtZA6",
+			"name": "Burn",
+			"artists": [
+					"Ellie Goulding"
+			],
+			"genre": "edm",
+			"subgenre": "pop edm",
+			"preview_url": null,
+			"track_url": "https://open.spotify.com/track/0xMd5bcWTbyXS7wPrBtZA6",
+			"image_url": "https://i.scdn.co/image/ab67616d0000b273474301b91976f6310bbe90a1"
+		}
+	]
+}

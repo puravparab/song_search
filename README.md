@@ -11,3 +11,19 @@
 - [Backend](/backend/): python code running on aws lambda
 - [Notebook](/notebook/): all jupyter notebooks used for testing out ideas
 - [Dataset](/dataset/): primary datasets used for this project
+
+## Setup
+
+Run client locally
+```bash
+cd client
+npm ci
+npm run dev
+```
+
+Upload the backend/lambda code as a .zip in a aws lambda function
+
+Create a .env.local file and add the following
+```
+NEXT_PUBLIC_LAMBDA=<URL of your lambda function>
+```

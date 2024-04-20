@@ -1,6 +1,6 @@
 interface Song {
   id: number;
-  trackId: string;
+  track_id: string;
   name: string;
   artists: string[];
   genre: string;
@@ -47,7 +47,7 @@ export const parseSongCSV = async (csvData: string): Promise<Song[]> => {
 
       songs.push({
         id: song.id as number,
-        trackId: song.track_id as string,
+        track_id: song.track_id as string,
         name: song.name as string,
         artists: Array.isArray(song.artists) ? song.artists : [],
         genre: song.genre as string,

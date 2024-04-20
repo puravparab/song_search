@@ -4,19 +4,44 @@ import { useState, useEffect, useRef} from 'react';
 
 interface Song {
   id: number;
-  trackId: string;
+  track_id: string;
   name: string;
   artists: string[];
   genre: string;
   subgenre: string;
 }
 
-const Search: React.FC<{songs: Song[], selectedSongs: Song[], handleSongClick: (song: Song) => void}> = ({ songs, selectedSongs, handleSongClick}) => {
+interface SongMetadata {
+	id: number;
+  track_id: string;
+  name: string;
+  artists: string[];
+  genre: string;
+  subgenre: string;
+	preview_url: string;
+	track_url: string;
+	image_url: string;
+}
+
+const Search: React.FC<{
+	songs: Song[], 
+	selectedSongs: SongMetadata[], 
+	handleSongClick: (song_id: number) => void
+}> = ({ 
+	songs, 
+	selectedSongs, 
+	handleSongClick
+}) => {
 	const [query, setQuery] = useState<string>("");
 	const [searchResults, setSearchResults] = useState<Song[]>([]);
 	const [totalResults, setTotalResults] = useState<number>(0);
 	const searchInputRef = useRef<HTMLInputElement>(null);
 	const [showDropdown, setShowDropdown] = useState(false);
+	const [highlightedSongsID, setHighlightedSongsID] = useState<number[]>([]);
+
+	useEffect(() => {
+		setHighlightedSongsID(selectedSongs.map((song) => song.id));
+	}, [selectedSongs])
 
 	// Handle when user types in song query
 	const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,6 +67,7 @@ const Search: React.FC<{songs: Song[], selectedSongs: Song[], handleSongClick: (
 		}
 	};
 
+	// Listen if the user clicks out of the search menu
 	useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -87,10 +113,13 @@ const Search: React.FC<{songs: Song[], selectedSongs: Song[], handleSongClick: (
 						dark:bg-zinc-800 bg-stone-100
 					">
 						{searchResults.map(song => {
-							const isSelected = selectedSongs.includes(song);
+							const isSelected = highlightedSongsID.includes(song.id);
 							return (
 							<li 
-								key={song.id} onClick={() => {handleSongClick(song)}}
+								key={song.id} onClick={() => {
+									if (!isSelected){setHighlightedSongsID((prevState) => [...prevState, song.id])}
+									handleSongClick(song.id)
+								}}
 								className={`py-2 px-3 text-sm hover:bg-gray-300 cursor-pointer ${
 									isSelected ? 'dark:bg-emerald-700 hover:dark:bg-emerald-700 hover:bg-green-200 bg-green-200' : 'dark:hover:bg-emerald-700 dark:text-zinc-100'
 								}`}
