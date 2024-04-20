@@ -56,11 +56,20 @@ const Home: React.FC = () => {
     setSongs(parsedSongs);
   };
 
-	// Fetch default or previous display state
+	// Fetch previous display state or default state
 	const fetchState = async () => {
-		const response = await fetch('default_state.json');
-    const state: State = await response.json();
-		setDisplayState(state);
+		try {
+			const history = JSON.parse(localStorage.getItem('displayStateHistory') || '[]');
+			if (history.length > 0) {
+				setDisplayState(history[history.length - 1]);
+			} else {
+				const response = await fetch('default_state.json');
+				const state: State = await response.json();
+				setDisplayState(state);
+			}
+		} catch (error) {
+			console.error('Error fetching display state:', error);
+		}
 	}
 
   // If user clicks on a song (search bar)
@@ -174,6 +183,7 @@ const Home: React.FC = () => {
 		return newSongMetadata
 	};
 
+	// Update display state from child component
 	const updateDisplayState = (input: SongMetadata[], genres: string[], num_recs: number, output: SongMetadata[]): void => {
 		setDisplayState({
 			input: input,
@@ -182,6 +192,22 @@ const Home: React.FC = () => {
 			output: output
 		})
 	}
+
+	const saveDisplayState = (input: SongMetadata[], genres: string[], num_recs: number, output: SongMetadata[]) => {
+		const state: State ={
+			input: input,
+			genres: genres,
+			num_recs: num_recs,
+			output: output
+		}
+		try {
+			const history = JSON.parse(localStorage.getItem('displayStateHistory') || '[]');
+			history.push(state);
+			localStorage.setItem('displayStateHistory', JSON.stringify(history));
+		} catch (error) {
+			console.error('Error saving display state to local storage:', error);
+		}
+	};
 
   return (
     <main 
@@ -209,6 +235,7 @@ const Home: React.FC = () => {
           addRandomSong={addRandomSong}
 					getMetadata={getMetadata}
 					updateDisplayState={updateDisplayState}
+					saveDisplayState={saveDisplayState}
         />
       </div>
       

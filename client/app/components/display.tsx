@@ -43,6 +43,7 @@ interface DisplayProps {
   addRandomSong: () => void;
 	getMetadata: (song_ids: number[]) => Song[];
 	updateDisplayState: (input: SongMetadata[], genres: string[], num_recs: number, output: SongMetadata[]) => void
+	saveDisplayState: (input: SongMetadata[], genres: string[], num_recs: number, output: SongMetadata[]) => void;
 }
 
 const Display: React.FC<DisplayProps> = ({
@@ -50,7 +51,8 @@ const Display: React.FC<DisplayProps> = ({
 	handleSongClick, 
 	addRandomSong,
 	getMetadata,
-	updateDisplayState
+	updateDisplayState,
+	saveDisplayState
 }) => {
 	// Current Display state
 	const [inputSongs, setInputSongs] = useState<SongMetadata[]>([]) // songs in the input
@@ -152,6 +154,7 @@ const Display: React.FC<DisplayProps> = ({
 				if (data && data.songs) {
 						const output = processRecommendedSongs(data.songs)
 						updateDisplayState(inputSongs, selectedGenres, numRecs, output);
+						saveDisplayState(inputSongs, selectedGenres, numRecs, output);
 						setRequestText(`(${duration/1000} seconds)`);
 				} else {
 					console.error('Invalid response format: missing "songs" property');
@@ -185,7 +188,6 @@ const Display: React.FC<DisplayProps> = ({
 				image_url: song.image_url,
 			};
 		});
-		console.log(res);
 		return res;
 	};
 
@@ -313,7 +315,7 @@ const Display: React.FC<DisplayProps> = ({
 			<div className="w-full mb-3 md:px-4 lg:px-14">
 				<h2 className="text-lg">03. Your Recommendations:</h2>
 				<p className="text-base dark:text-zinc-700">
-					- You song recommendations are displayed below.
+					- Click on get recommendations.
 					<br/>
 					- Hover over a song to listen to it.
 					<br />
@@ -327,6 +329,8 @@ const Display: React.FC<DisplayProps> = ({
 									key={song.id}
 									onMouseEnter={() => handleMouseEnter(song.preview_url)}
 									onMouseLeave={handleMouseLeave}
+									onClick={() => {
+										if (song.track_url){window.open(song.track_url, '_blank');}}}
 									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-90 ${genreColor[song.genre || '']}`}
 								>	
 									<img src={song.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
