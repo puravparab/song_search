@@ -193,6 +193,7 @@ const Home: React.FC = () => {
 		})
 	}
 
+	// Save current display state to local storage
 	const saveDisplayState = (input: SongMetadata[], genres: string[], num_recs: number, output: SongMetadata[]) => {
 		const state: State ={
 			input: input,

@@ -14,6 +14,16 @@
 
 ## Setup
 
+Use scripts
+```
+chmod +x setup.sh
+chmod +x run.sh
+./setup.sh
+./run.sh
+```
+
+or 
+
 Run client locally
 ```bash
 cd client
