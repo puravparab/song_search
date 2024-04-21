@@ -1,16 +1,18 @@
 # Song Search
+Song Search is a web application that recommends songs using similarity search.
 
-- Song Search is a web application that recommends songs based on similarity search run on song "embeddings".
+## What is this?
+Song search is an experiment in recommending songs to users using song embeddings. 
 
-- Embeddings are created using normalized values of song characteristics sourced from spotify's database
+Song embeddings are a vector of normalized values of various song characteristics such as danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo.
 
-- Dataset used for this project can be found here -> [songs](https://www.kaggle.com/datasets/joebeachcapital/30000-spotify-songs)
+Cosine similarity is used to compare, rank and retrieve top k similar songs
 
 ## Project Structure
-- [Client](/client): code for the nextjs frontend
-- [Backend](/backend/): python code running on aws lambda
-- [Notebook](/notebook/): all jupyter notebooks used for testing out ideas
-- [Dataset](/dataset/): primary datasets used for this project
+- [Client](/client): Code for the nextjs frontend
+- [Backend](/backend/): Python code running on aws lambda
+- [Notebook](/notebook/): All of jupyter notebooks used for testing out ideas and data processing
+- [Dataset](/dataset/): Primary [dataset](https://www.kaggle.com/datasets/joebeachcapital/30000-spotify-songs) used for this project
 
 ## Setup
 

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/react';
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -16,9 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleAnalytics gaId="G-VRZWVH7QG1" />
       <body className={inter.className}>
         <div className="font-['Telegraf']">
           {children}
+          <Analytics />
         </div>
       </body>
     </html>
