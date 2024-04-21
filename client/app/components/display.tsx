@@ -158,16 +158,16 @@ const Display: React.FC<DisplayProps> = ({
 						setRequestText(`(${duration/1000} seconds)`);
 				} else {
 					console.error('Invalid response format: missing "songs" property');
-					setRequestText("Try again");
+					setTimeout(() => {setRequestText("try again");}, 2000);
 				}
 			} else {
 				console.error('Request failed with status:', response.status);
 				console.error('Response data:', response.data);
-				setRequestText("Try again");
+				setTimeout(() => {setRequestText("try again");}, 2000);
 			}
 		} catch (error) {
 			console.error('Error:', error);
-			setRequestText("Try again");
+			setTimeout(() => {setRequestText("try again");}, 2000);
 		}
 	}
 	// create metadata for each song using mix of local and external metadata

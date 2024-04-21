@@ -224,8 +224,11 @@ const Home: React.FC = () => {
       <div className="lg:w-7/12 md:w-8/12 w-11/12 my-6">
         <Search 
 					songs={songs} 
+					displayState={displayState}
 					selectedSongs={displayState.input} 
-					handleSongClick={handleSongClick}/>
+					handleSongClick={handleSongClick}
+					updateDisplayState={updateDisplayState}
+				/>
       </div>
 
       {/* Main Display */}
