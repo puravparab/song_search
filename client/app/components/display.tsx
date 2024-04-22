@@ -23,13 +23,13 @@ interface SongMetadata {
 }
 
 const genreColor: { [key: string]: string } = {
-  'pop': 'bg-green-600 hover:opacity-100',
-  'rap': 'bg-blue-600 hover:opacity-100',
-  'rock': 'bg-red-600 hover:opacity-100',
-  'latin': 'bg-pink-600 hover:opacity-100',
-  'r&b': 'bg-amber-600 hover:opacity-100',
-  'edm': 'bg-violet-600 hover:opacity-100',
-	'': 'bg-emerald-700 hover:opacity-100'
+  'pop': 'bg-green-700 dark:bg-green-600 hover:opacity-100',
+  'rap': 'bg-blue-700 dark:bg-blue-600 hover:opacity-100',
+  'rock': 'bg-red-700 dark:bg-red-600 hover:opacity-100',
+  'latin': 'bg-pink-700 dark:bg-pink-600 hover:opacity-100',
+  'r&b': 'bg-amber-700 dark:bg-amber-600 hover:opacity-100',
+  'edm': 'bg-violet-700 dark:bg-violet-600 hover:opacity-100',
+	'': 'bg-emerald-700 dark:bg-emerald-700 hover:opacity-100'
 };
 
 interface DisplayProps {
@@ -196,7 +196,7 @@ const Display: React.FC<DisplayProps> = ({
 			{/* 01. Select songs */}
 			<div className="w-full mb-3 md:pl-4 md:pr-0">
 				<h2 className="text-lg">01. Select songs: <span className='ml-2 p-1 cursor-pointer text-lg' onClick={addRandomSong}>🎲</span></h2>
-				<p className="text-base dark:text-zinc-700">
+				<p className="text-base text-black dark:text-zinc-700">
 					- Search and add one or more songs.
 					<br/>
 					- Click on song to remove it.
@@ -213,12 +213,12 @@ const Display: React.FC<DisplayProps> = ({
 									key={song.id} onClick={() => {handleRemoveSong(song.id)}}
 									onMouseEnter={() => handleMouseEnter(inputSong.preview_url)}
 									onMouseLeave={handleMouseLeave}
-									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-90 ${bgColor}`}
+									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-100 hover:opacity-90 dark:opacity-90 dark:hover:opacity-100 ${bgColor}`}
 								>	
 									<img src={inputSong.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
 									<div className="flex flex-col">
-										<span className="dark:text-zinc-100">{inputSong.name}</span>
-										<span className="dark:text-zinc-300 text-zinc-500">{inputSong.artists.join(', ')}</span>
+										<span className="text-zinc-100 dark:text-zinc-100">{inputSong.name}</span>
+										<span className="text-zinc-200 dark:text-zinc-300">{inputSong.artists.join(', ')}</span>
 									</div>
 								</div>
 							);
@@ -237,12 +237,12 @@ const Display: React.FC<DisplayProps> = ({
 					<br />
 					- Click on a genre to remove it
 				</p>
-				<div className="flex flex-row flex-wrap gap-5 mt-4 p-5 items-start justify-start border rounded-lg dark:border-zinc-800">
+				<div className="flex flex-row flex-wrap gap-5 mt-4 p-5 items-start justify-start border rounded-lg border-zinc-300 dark:border-zinc-800">
 					<div className="w-full flex flex-col">
 						<label className="mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-200">Select Genres</label>
 						<select className="
 							flex flex-col w-20 mt-1 mb-3 py-1 px-1 rounded border text-md focus:ring-0 outline-none
-							dark:border-zinc-800 dark:bg-zinc-950"
+							border-zinc-300 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-950"
 							onChange={handleGenreChange}
               value=""
 						>
@@ -262,7 +262,7 @@ const Display: React.FC<DisplayProps> = ({
 										key={genre}
 										className={`
 											px-3 py-1 rounded-lg text-sm font-medium cursor-pointer
-											${genreColor[genre]} opacity-90 dark:text-white
+											${genreColor[genre]} opacity-90 text-zinc-100 dark:text-white
 										`}
 										onClick={() => removeGenre(genre)}
 									>
@@ -331,11 +331,11 @@ const Display: React.FC<DisplayProps> = ({
 									onMouseLeave={handleMouseLeave}
 									onClick={() => {
 										if (song.track_url){window.open(song.track_url, '_blank');}}}
-									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-90 ${genreColor[song.genre || '']}`}
+									className={`flex flex-row py-2 pl-2 pr-4 w-fit rounded-full text-xs cursor-pointer opacity-100 hover:opacity-90 dark:opacity-90 dark:hover:opacity-100 ${genreColor[song.genre || '']}`}
 								>	
 									<img src={song.image_url || ""} width="32px" height="32px" className="rounded-full m-auto mr-2"/>
 									<div className="flex flex-col">
-										<span className="dark:text-zinc-100">{song.name}</span>
+										<span className="text-zinc-100 dark:text-zinc-100">{song.name}</span>
 										<span className="dark:text-zinc-300 text-zinc-200">{song.artists.join(', ')}</span>
 									</div>
 								</div>

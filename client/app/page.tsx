@@ -213,7 +213,7 @@ const Home: React.FC = () => {
   return (
     <main 
       className="
-        dark:bg-zinc-950 dark:text-stone-100 bg-stone-200 text-black 
+			bg-slate-100 dark:bg-zinc-950 text-black dark:text-stone-100  
         flex min-h-screen flex-col items-center justify-start 
         py-5 md:px-10 px-5"
     >

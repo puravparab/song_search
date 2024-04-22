@@ -137,7 +137,7 @@ const Search: React.FC<{
 		>
 			<div className="w-full flex flex-row items-center mb-2
 				border rounded-lg border-zinc-300 dark:border-zinc-800 hover:border-zinc-500 dark:hover:border-zinc-700 
-				dark:bg-black bg-white">
+				dark:bg-black bg-slate-100">
 				<input
 					type="text"
 					placeholder="Add songs..."
@@ -146,7 +146,7 @@ const Search: React.FC<{
 					onClick={handleSearchInputClick}
 					className="
 						w-full mx-4 my-2 text-base text-black placeholder:text-zinc-500 
-						focus:ring-0 dark:bg-black dark:text-stone-100 focus:outline-none"
+						focus:ring-0 bg-slate-100 dark:bg-black dark:text-stone-100 focus:outline-none"
 				/>
 				<div className="px-2 py-2 cursor-pointer" onClick={handleShowHistory}>
 					<FaHistory/>
@@ -162,13 +162,13 @@ const Search: React.FC<{
 
 					<ul className="
 						w-full rounded-lg shadow-lg
-						dark:bg-zinc-800 bg-stone-100
+						dark:bg-zinc-800 bg-slate-100
 					">
 						
 						{history.slice().reverse().map((query, index) => (
 							<li 
 								key={index} onClick={() => handleHistoryClick(query)}
-								className="flex flex-row flex-wrap gap-x-4 py-2 px-3 border-b border-zinc-700 text-xs sm:text-sm hover:dark:bg-emerald-700 cursor-pointer"
+								className="flex flex-row flex-wrap gap-x-4 py-2 px-3 border-b hover:border-0 border-zinc-300 dark:border-zinc-700 text-xs sm:text-sm hover:bg-green-200 hover:dark:bg-emerald-700 cursor-pointer"
 							>
 								{query.input.slice().reverse().map((item, itemIndex) => (
 									<div key={itemIndex} className="flex flex-row flex-wrap">
@@ -187,7 +187,7 @@ const Search: React.FC<{
 				<>
 					<ul className="
 						w-full rounded-lg shadow-lg
-						dark:bg-zinc-800 bg-stone-100
+						dark:bg-zinc-800 bg-slate-100
 					">
 						{searchResults.map(song => {
 							const isSelected = highlightedSongsID.includes(song.id);
@@ -197,7 +197,7 @@ const Search: React.FC<{
 									if (!isSelected){setHighlightedSongsID((prevState) => [...prevState, song.id])}
 									handleSongClick(song.id)
 								}}
-								className={`py-2 px-3 text-xs sm:text-sm hover:bg-gray-300 cursor-pointer ${
+								className={`py-2 px-3 text-xs sm:text-sm hover:bg-green-200 cursor-pointer ${
 									isSelected ? 'dark:bg-emerald-700 hover:dark:bg-emerald-700 hover:bg-green-200 bg-green-200' : 'dark:hover:bg-emerald-700 dark:text-zinc-100'
 								}`}
 							>
