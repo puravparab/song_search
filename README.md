@@ -1,6 +1,8 @@
 # Song Search
 Song Search is a web application that recommends songs using similarity search.
 
+![SongSearch](assets/songsearch.png)
+
 ## What is this?
 Song search is an experiment in recommending songs to users using song embeddings. 
 
