@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link'
 import axios from 'axios';
 
 import Search from './components/search';
@@ -243,6 +244,9 @@ const Home: React.FC = () => {
         />
       </div>
       
+			<div className="w-full text-center">
+				<p>Built by <Link href="https://twitter.com/notpurav">@notpurav</Link>. <Link href="https://github.com/puravparab/song_search">Source code</Link>.</p>
+			</div>
     </main>
   );
 }

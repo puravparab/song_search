@@ -196,7 +196,7 @@ const Display: React.FC<DisplayProps> = ({
 			{/* 01. Select songs */}
 			<div className="w-full mb-3 md:pl-4 md:pr-0">
 				<h2 className="text-lg">01. Select songs: <span className='ml-2 p-1 cursor-pointer text-lg' onClick={addRandomSong}>🎲</span></h2>
-				<p className="text-base text-black dark:text-zinc-700">
+				<p className="text-base text-black dark:text-zinc-600">
 					- Search and add one or more songs.
 					<br/>
 					- Click on song to remove it.
@@ -230,7 +230,7 @@ const Display: React.FC<DisplayProps> = ({
 			{/* 02. Customize: */}
 			<div className="w-full mb-3">
 				<h2 className="text-lg">02. Customize:</h2>
-				<p className="text-base dark:text-zinc-700">
+				<p className="text-base dark:text-zinc-600">
 					- Select genres you want to include.
 					<br/>
 					- Choose number of recommendations.
@@ -314,7 +314,7 @@ const Display: React.FC<DisplayProps> = ({
 			{/* 03. Your Recommendations */}
 			<div className="w-full mb-3 md:px-4 lg:px-14">
 				<h2 className="text-lg">03. Your Recommendations:</h2>
-				<p className="text-base dark:text-zinc-700">
+				<p className="text-base dark:text-zinc-600">
 					- Click on get recommendations.
 					<br/>
 					- Hover over a song to listen to it.
